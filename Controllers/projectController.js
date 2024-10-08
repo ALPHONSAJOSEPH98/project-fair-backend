@@ -23,3 +23,43 @@ exports.addProject = async(req,res)=>{
     }
     
 }
+exports.getAllprojects = async(req,res)=>{
+  console.log("inside get project contoller");
+  try{
+    const getAllProjects= await projects.find()
+    res.status(200).json(getAllProjects)
+  }
+  catch(error){
+    res.status(500).json("server error " + error)
+  }
+  
+}
+
+exports.getUserProjects = async(req,res)=>{
+  console.log("inside getprojects");
+  const userId =req.payload
+  try{
+    
+    const getUserProjects = await projects.find({userId})
+    res.status(200).json(getUserProjects)
+    console.log(userId);
+    
+    
+    
+  }
+  catch(error){
+    res.status(500).json("error" +error)
+  }
+  
+}
+exports.getHomeProject= async(req,res)=>{
+  console.log("inside get 3 projects");
+  
+  try{
+    const getHomeProject= await projects.find().limit(3)
+  res.status(200).json(getHomeProject)
+  }
+  catch(error){
+    res.status(504).json("server error" + error)
+  }
+}

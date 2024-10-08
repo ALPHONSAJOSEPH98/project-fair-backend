@@ -16,4 +16,12 @@ const router = express.Router()
     router.post('/api/register' , userController.register)
     router.post('/api/login' , userController.login)
     router.post('/api/addProject',jwtMiddleware,multerConfig.single('projectImage'),projectController.addProject)
+
+    // get all users project find ()
+     router.get('/api/getAllProjects' ,jwtMiddleware , projectController.getAllprojects)
+    // get all projects of particular user find({userid})
+     router.get('/api/getUserProjects',jwtMiddleware,projectController.getUserProjects)
+    // get home projects find().limit(3)
+    router.get('/api/getHomeProject',jwtMiddleware,projectController.getHomeProject)
+
     module.exports = router

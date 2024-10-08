@@ -8,7 +8,7 @@ const jwtMiddleware = (req,res,next)=>{
     // verify token
     const jwtResponse = jwt.verify(token ,'alphonsa790237')
     console.log(jwtResponse);
-    
+    req.payload = jwtResponse.userId
     next()
     
 }
