@@ -22,6 +22,6 @@ const router = express.Router()
     // get all projects of particular user find({userid})
      router.get('/api/getUserProjects',jwtMiddleware,projectController.getUserProjects)
     // get home projects find().limit(3)
-    router.get('/api/getHomeProject',jwtMiddleware,projectController.getHomeProject)
-
+    router.get('/api/getHomeProject',projectController.getHomeProject)
+    
     module.exports = router
