@@ -25,8 +25,15 @@ exports.addProject = async(req,res)=>{
 }
 exports.getAllprojects = async(req,res)=>{
   console.log("inside get project contoller");
+  const searchKey = req.query.search
+  const query={
+    language:{
+      $regex:searchKey,
+      $options:'i'
+    }
+  }
   try{
-    const getAllProjects= await projects.find()
+    const getAllProjects= await projects.find(query)
     res.status(200).json(getAllProjects)
   }
   catch(error){
@@ -42,10 +49,7 @@ exports.getUserProjects = async(req,res)=>{
     
     const getUserProjects = await projects.find({userId})
     res.status(200).json(getUserProjects)
-    console.log(userId);
-    
-    
-    
+    console.log(userId)
   }
   catch(error){
     res.status(500).json("error" +error)
@@ -63,3 +67,42 @@ exports.getHomeProject= async(req,res)=>{
     res.status(504).json("server error" + error)
   }
 }
+
+// edit project 
+exports.editProject = async (req,res)=>{
+  console.log("inside edit project ")
+    const {title,language,github,website,overview,projectImage} = req.body
+    const uploadImg= req.file ? req.file.filename :projectImage
+    const userId = req.payload
+    const {projectId} = req.params
+ try{
+  console.log("inside editt")
+  
+  const updateProject = await projects.findByIdAndUpdate({_id:projectId },{title:title ,language:language,github:github,website:website,overview:overview,projectImage:uploadImg ,userId})
+   
+  // console.log(userId)
+  
+  await  updateProject.save()
+  res.status(200).json(updateProject)
+ }
+ catch(error){
+  res.status(500).json("error" +error)
+ }
+}
+
+// delete project 
+exports.deleteProject = async(req,res)=>{
+  console.log("inside delete");
+  
+  const {projectId} = req.params
+  try{
+    await projects.findByIdAndDelete({_id:projectId})
+    res.status(200).json("project deleted successfully")
+  }
+  catch(error){
+    console.log("error"+error);
+    res.status(500).json("error"+error)
+  }
+}
+
+// 

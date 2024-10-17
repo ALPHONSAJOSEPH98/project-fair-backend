@@ -23,5 +23,7 @@ const router = express.Router()
      router.get('/api/getUserProjects',jwtMiddleware,projectController.getUserProjects)
     // get home projects find().limit(3)
     router.get('/api/getHomeProject',projectController.getHomeProject)
-    
+    // update
+  router.put('/api/updateProject/:projectId' , jwtMiddleware,multerConfig.single('projectImage') ,projectController.editProject)
+  router.delete('/api/deleteProject/:projectId' , jwtMiddleware,projectController.deleteProject)
     module.exports = router

@@ -27,6 +27,8 @@ pfServer.use(cors())
 pfServer.use(express.json())
 // pfServer.use(applicationMiddleware)
 pfServer.use(router)
+// image importing to frontend
+pfServer.use('/uploads',express.static('./uploads'))
 // 6. define port number
 const PORT = 3000 || process.env.PORT
 // 7. define listen
